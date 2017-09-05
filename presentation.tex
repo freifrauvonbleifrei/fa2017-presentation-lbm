@@ -112,9 +112,102 @@
       \tableofcontents
     \end{frame}
   }
-  
-\section{Introduction}
+ 
+%TODO an Julian schicken, damit er nochmal drüberschaut
+%- Intro: game of life video (because looks cool)?
+%- Zelluläre Automaten (5 min)
+%- Wie funktioniert/was ist? Beispiel, Vor-/Nachteile
+%- Lattice gases (5 min)
+%- Als erste Annäherung an LBM; noch sehr ähnlich zu zellulärem Automat.
+%- LBM (10 min)
+% - different from Lattice gases: unsymmetric moments are eliminated by choosing the right stencils (are there any more important differences?)
+% - Stream-Collide scheme in graphics (or @Marcial do we get that earlier on?)
+% - show the similarity to Boltzmann equation, introduce important moments, show most important collision operators
+% - 
 
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{section}{The Lattice Boltzmann Method}
+	
+	
+	\begin{frame}{Stream Step}
+		\begin{columns}[t,totalwidth=\textwidth]
+			\column{.4\linewidth}
+			\centering
+			\vspace{1cm}\\
+			Discrete \\ particle distribution function
+			\begin{align*}
+			f_i \pause = \textcolor{red}{\bm{c_i}}\cdot w_i
+			\end{align*}
+			\column{.6\linewidth}
+			\only<2>{
+				\begin{figure}[htbp]
+					\centering
+					\setlength\figureheight{0.675\textheight} 
+					\setlength\figurewidth{\figureheight} 
+					\input{img/lbm-stream.tex}%
+					\caption*{One streaming step for a D2Q9-stencil}
+				\end{figure}
+			}
+			\only<3>{
+				\begin{figure}[htbp]
+					\centering
+					\setlength\figureheight{0.675\textheight} 
+					\setlength\figurewidth{\figureheight} 
+					\input{img/lbm-stream-after.tex}%
+					\caption*{One streaming step for a D2Q9-stencil}
+				\end{figure}
+			}
+		\end{columns}
+	\end{frame}
+	
+	\begin{frame}{The Lattice Boltzmann Equation}
+		\begin{block} 			
+			{Applied as the collide step:}
+			\begin{align*}	
+			f_i(\bm{x} + \bm{c_i}\Delta t, t + \Delta t) = f_i(\bm{x}, t) + \Omega_i(\bm{x}, t)
+			\end{align*}
+		\end{block}	
+		%B E
+		%Collision operators
+	\end{frame}
+	
+	\begin{frame}{Moments - the Interesting Outputs in LBM}
+		Density and velocity are given locally
+		
+		\begin{align*}
+		\rho(\bm{x}, t) = \sum_i f_i(\bm{x},t)
+		\end{align*}
+		\begin{align*}
+		\rho \bm{u}(\bm{x}, t) = \sum_i \bm{c_i} f_i(\bm{x},t)
+		\end{align*}
+		
+		Source: \cite{kruger.2016}
+	\end{frame}
+\end{section}
+
+
+
+
+
+
+
+
+
+
+
+
+%stuff below here just for convenient copy-paste, will be removed
 \begin{frame}{Earth Mantle Convection II}
 \begin{itemize}
 	\item Creeping flow, according to \cite{weismueller.2015}:
@@ -197,9 +290,6 @@
 \end{itemize}
 \end{frame}
 
-\section{TerraNeo -- Implementation of the Finite Element Method}
-
-\subsection{Preparations}
 \begin{frame}{Preparations}
 \begin{itemize}
 	\item Use  \texttt{CLOCK\_MONOTONIC} from the system environment for runtime measurement
@@ -214,40 +304,7 @@
 \end{itemize}
 \end{frame}
 
-\section{waLBerla -- Implementation of the Lattice Boltzmann Method}
-\subsection{LBM -- Short Overview}
-\begin{frame}{LBM - very short overview}
-	%stream (graphics)
-	\begin{columns}[t,totalwidth=\textwidth]
-		\column{.4\linewidth}
-		\centering
-		\vspace{1cm}\\
-		Discrete \\ particle distribution function
-		\begin{align*}
-		f_i \pause = \textcolor{red}{\bm{c_i}}\cdot w_i
-		\end{align*}
-	\column{.6\linewidth}
-	\only<2>{
-		\begin{figure}[htbp]
-			\centering
-			\setlength\figureheight{0.675\textheight} 
-			\setlength\figurewidth{\figureheight} 
-			\input{img/lbm-stream.tex}%
-			\caption*{One streaming step for a D2Q9-stencil}
-		\end{figure}
-	}
-	\only<3>{
-		\begin{figure}[htbp]
-			\centering
-			\setlength\figureheight{0.675\textheight} 
-			\setlength\figurewidth{\figureheight} 
-			\input{img/lbm-stream-after.tex}%
-			\caption*{One streaming step for a D2Q9-stencil}
-		\end{figure}
-	}
-	\end{columns}
-	
-\end{frame}
+
 \begin{frame}{LBM - very short overview}
 	%-collide(formula)-explicitness
 	\begin{block} 
@@ -270,7 +327,6 @@
 		
 		Source: \cite{kruger.2016}
 \end{frame}
-\subsection{Boundary Conditions}
 \begin{frame}{Boundary Conditions : Expectations}
 	\begin{block}
 		
@@ -284,7 +340,6 @@
 	\end{block}
 \end{frame}
 
-\subsection{Thermal LBM}
 \begin{frame}{Thermal LBM : Principle}
 		\begin{center}
 			\smartdiagram[circular diagram:clockwise]{
@@ -292,9 +347,6 @@
 			
 		\end{center}
 \end{frame}
-
-
-
   { % Questions?
     \setbeamertemplate{footline}{}
     \begin{frame}[c,noframenumbering]
@@ -312,4 +364,3 @@
     \end{frame}
   }
 \end{document}
-
