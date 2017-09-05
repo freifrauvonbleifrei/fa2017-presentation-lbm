@@ -90,29 +90,21 @@
 \usepackage{smartdiagram}
 
 % Title, authors, and date
-\title[Comparison between LBM and FEM for Earth Mantle Simulation]{Comparison between Lattice Boltzmann Methods and Finite Elements for Earth Mantle Simulation}
+\title{From Cellular Automata to the Lattice Boltzmann Method}
 \subtitle{BGCE Honours Project}
-\author[T. Pollinger, C. Schwarzmeier, N. Dommaraju]{Theresa Pollinger, Christoph Schwarzmeier, Nivesh Dommaraju}
-% English version
-\institute[LSS]{Chair for System Simulation, Friedrich-Alexander University of Erlangen-Nuremberg}
-% German version
-%\institute[Lehrstuhl f\"ur XYZ]{Lehrstuhl f\"ur XYZ, Friedrich-Alexander-Universit\"at Erlangen-N\"urnberg}
+\author[T. Pollinger, M. Gaißert]{Theresa Pollinger, Marcial Gaißert}
+\institute[Ferienakademie 2017]{Ferienakademie Sarntal 2017}
 \date{\today}
-% Set additional logo (overwrites FAU seal)
-
 % Setting right internal properties for the pdf-file
 \usepackage{ifpdf}
 \ifpdf
-\hypersetup{pdfauthor={Theresa Pollinger, Christoph Schwarzmeier, Nivesh Dommaraju}}
-\hypersetup{pdftitle={Comparison between Lattice Boltzmann Methods and Finite Elements for Earth Mantle Simulation}}
+\hypersetup{pdfauthor={Theresa Pollinger, Marcial Gaißert}}
+\hypersetup{pdftitle={From Cellular Automata to the Lattice Boltzmann Method}}
 \fi
 
 \begin{document}
- 
-
 % Title
 \maketitle
-
 
   { % Outline
     \setbeamertemplate{footline}{}
@@ -136,7 +128,7 @@
 		Re =\frac{\rho \cdot u \cdot h}{\mu}\approx10^{-20} \ll 1
 		\end{align*}
 \pause
-	\item Dominant viscous forces, negligible intertial forces
+	\item Dominant viscous forces, negligible inertial forces
 	\item \textit{Navier-Stokes} equations simplify to \textit{Stokes} equations
 		\begin{align*}
 		\mu\Delta \bm{u}-\nabla p + \bm{f} &= \bm{0}\\
