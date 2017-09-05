@@ -1,0 +1,26 @@
+\resizebox{\figurewidth}{\figureheight}{
+ \begin{tikzpicture}
+    \coordinate (Origin)   at (0,0);
+    \coordinate (XAxisMin) at (-1,0);
+    \coordinate (XAxisMax) at (5,0);
+    \coordinate (YAxisMin) at (0,-1);
+    \coordinate (YAxisMax) at (0,5);
+    \clip (-1,-1) rectangle (5cm,5cm); % Clips the picture...
+    \coordinate (Bone) at (0,2);
+    \coordinate (Btwo) at (2,-2);
+    \draw[style=help lines,dashed] (-14,-14) grid[step=2cm] (14,14);
+    \foreach \x in {-7,-6,...,7}{% Two indices running over each
+      \foreach \y in {-7,-6,...,7}{% node on the grid we have drawn 
+        \node[draw,circle,inner sep=2pt,fill] at (1+2*\x,1+2*\y) {};
+      }
+    }
+    \coordinate (exm)   at (3,1);
+    \foreach \x in {0, 1, -1}{
+    	\foreach \y in {0, 1, -1}{
+    		\coordinate (neigh)   at ($(exm) + 2*(\x ,\y)$);
+		    \draw [thick,-latex,red] (neigh)
+			  --( $(neigh) + (\x ,\y)$ ) node [] {};
+	    }
+    }
+  \end{tikzpicture}
+}
