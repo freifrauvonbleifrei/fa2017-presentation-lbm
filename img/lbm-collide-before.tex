@@ -1,0 +1,28 @@
+\resizebox{\figurewidth}{\figureheight}{
+ \begin{tikzpicture}
+    \coordinate (Origin)   at (0,0);
+    \coordinate (XAxisMin) at (-1,0);
+    \coordinate (XAxisMax) at (5,0);
+    \coordinate (YAxisMin) at (0,-1);
+    \coordinate (YAxisMax) at (0,5);
+
+    \clip (-1,-1) rectangle (5cm,5cm); % Clips the picture...
+    \coordinate (Bone) at (0,2);
+    \coordinate (Btwo) at (2,-2);
+    \draw[style=help lines,dashed] (-14,-14) grid[step=2cm] (14,14);
+    \foreach \x in {-7,-6,...,7}{% Two indices running over each
+      \foreach \y in {-7,-6,...,7}{% node on the grid we have drawn 
+        \node[draw,circle,inner sep=2pt,fill] at (1+2*\x,1+2*\y) {};
+      }
+    }
+    \coordinate (exm)   at (3,1);
+    \pgfmathsetseed{10}
+    \foreach \x in {0, 1, -1}{
+    	\foreach \y in {0, 1, -1}{
+    		\pgfmathsetmacro{\ra}{0.5*rand+1}%
+		    \draw [thick,-latex,blue] (exm)
+			  --( $(exm) + (\x*\ra ,\y*\ra)$ ) node [] {};
+	    }
+    }
+  \end{tikzpicture}
+}
