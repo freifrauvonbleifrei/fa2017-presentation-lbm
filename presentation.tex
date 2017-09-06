@@ -120,10 +120,9 @@
 %- Lattice gases (5 min)
 %- Als erste Annäherung an LBM; noch sehr ähnlich zu zellulärem Automat.
 %- LBM (10 min)
-% - different from Lattice gases: unsymmetric moments are eliminated by choosing the right stencils (are there any more important differences?)
 % - Stream-Collide scheme in graphics (or @Marcial do we get that earlier on?)
 % - show the similarity to Boltzmann equation, introduce important moments, show most important collision operators
-% - 
+% - Nondimensionalization
 
 
 
@@ -137,26 +136,23 @@
 
 
 
-\begin{section}{The Lattice Boltzmann Method}
-	
-	
-	\begin{frame}{Stream Step}
+\begin{section}{The Lattice Boltzmann Method}	
+	\begin{frame}{Collide Step}
 		\begin{columns}[t,totalwidth=\textwidth]
 			\column{.4\linewidth}
 			\centering
 			\vspace{1cm}\\
-			Discrete \\ particle distribution function
-			\begin{align*}
-			f_i \pause = \textcolor{red}{\bm{c_i}}\cdot w_i
-			\end{align*}
+			
+			Particle distribution function $f_i$:
+			discrete in space and time, \textcolor{blue}{continuous in probability values}
 			\column{.6\linewidth}
 			\only<2>{
 				\begin{figure}[htbp]
 					\centering
 					\setlength\figureheight{0.675\textheight} 
 					\setlength\figurewidth{\figureheight} 
-					\input{img/lbm-stream.tex}%
-					\caption*{One streaming step for a D2Q9-stencil}
+					\input{img/lbm-collide-before.tex}%
+					\caption*{One collide step for a D2Q9-stencil}
 				\end{figure}
 			}
 			\only<3>{
@@ -164,20 +160,62 @@
 					\centering
 					\setlength\figureheight{0.675\textheight} 
 					\setlength\figurewidth{\figureheight} 
-					\input{img/lbm-stream-after.tex}%
-					\caption*{One streaming step for a D2Q9-stencil}
+					\input{img/lbm-collide-after.tex}%
+					\caption*{One collide step for a D2Q9-stencil}
 				\end{figure}
 			}
 		\end{columns}
 	\end{frame}
+	\begin{frame}{Stream Step}
+		\begin{columns}[t,totalwidth=\textwidth]
+			\column{.4\linewidth}
+			\centering
+			\vspace{1cm}\\
+			Particle distribution function $f_i$:
+			\textcolor{red}{discrete in space and time}, continuous in probability values
+			\column{.6\linewidth}
+			\only<1>{
+				\begin{figure}[htbp]
+					\centering
+					\setlength\figureheight{0.675\textheight} 
+					\setlength\figurewidth{\figureheight} 
+					\input{img/lbm-stream.tex}%
+					\caption*{One stream step for a D2Q9-stencil}
+				\end{figure}
+			}
+			\only<2>{
+				\begin{figure}[htbp]
+					\centering
+					\setlength\figureheight{0.675\textheight} 
+					\setlength\figurewidth{\figureheight} 
+					\input{img/lbm-stream-after.tex}%
+					\caption*{One stream step for a D2Q9-stencil}
+				\end{figure}
+			}
+		\end{columns}
+	\end{frame}
+
 	
 	\begin{frame}{The Lattice Boltzmann Equation}
-		\begin{block} 			
-			{Applied as the collide step:}
+
+			{...is what we get when we apply both steps:}
 			\begin{align*}	
 			f_i(\bm{x} + \bm{c_i}\Delta t, t + \Delta t) = f_i(\bm{x}, t) + \Omega_i(\bm{x}, t)
 			\end{align*}
-		\end{block}	
+			\pause
+			With collision operator $\Omega_i(\bm{x}, t)$, e.g.:
+			\begin{itemize}
+				\item BGK: $\Omega (f)={\frac {1}{\tau}}(f_{i}^{\text{eq}}-f_{i}) = \omega (f_{i}^{\text{eq}}-f_{i}) $
+				\item TRT: %TODO or leave out
+			\end{itemize}
+			\pause 
+			and the equilibrium particle distribution function $f_{i}^{\text{eq}} = $	%TODO
+			\pause 
+			\newline\par\smallskip
+			{Cf. Boltzmann Equation}
+			\begin{align*}%stolen from wikipedia
+				{{\frac {\partial f}{\partial t}}+{\frac {\bm {p} }{m}}\cdot \nabla f=\left({\frac {\partial f}{\partial t}}\right)_{ {coll} }}
+			\end{align*}
 		%B E
 		%Collision operators
 	\end{frame}
@@ -191,9 +229,22 @@
 		\begin{align*}
 		\rho \bm{u}(\bm{x}, t) = \sum_i \bm{c_i} f_i(\bm{x},t)
 		\end{align*}
-		
-		Source: \cite{kruger.2016}
 	\end{frame}
+	
+	\begin{frame}{Nondimensionalization -- setting the step size}
+		= Normalization in the three physical dimensions time, space, mass \newline
+		\par\bigskip
+		\pause
+		Usual choice:
+		\begin{align*}
+		\Delta x^*  = 1 = C_x \cdot \Delta x\\ 
+		\Delta t^* = 1 = C_t \cdot \Delta t\\ 
+		\Delta \rho^* = 1 = C_\rho \cdot \Delta \rho\\ 
+		\end{align*}
+		\pause
+		The kinematic velocity in lattice units is directly linked to $\omega$/$\tau$: %TODO
+	\end{frame}
+	
 \end{section}
 
 
@@ -206,147 +257,6 @@
 
 
 
-
-%stuff below here just for convenient copy-paste, will be removed
-\begin{frame}{Earth Mantle Convection II}
-\begin{itemize}
-	\item Creeping flow, according to \cite{weismueller.2015}:
-		\begin{align*}
-		\begin{rcases}
-		\mu &\approx10^{21}\,\text{Pa}\cdot \text{s}\\
-		u &\approx3\,\text{cm/a}\\
-		h &=2 867\,\text{km}\\
-		\rho &\approx4000\,\text{kg/m}^3
-		\end{rcases}
-		Re =\frac{\rho \cdot u \cdot h}{\mu}\approx10^{-20} \ll 1
-		\end{align*}
-\pause
-	\item Dominant viscous forces, negligible inertial forces
-	\item \textit{Navier-Stokes} equations simplify to \textit{Stokes} equations
-		\begin{align*}
-		\mu\Delta \bm{u}-\nabla p + \bm{f} &= \bm{0}\\
-		\nabla \cdot \bm{u} &= \bm{0}
-		\end{align*}
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{Derivation of a Benchmark II}
-\begin{itemize}
-\item[]
-	\begin{itemize}
-		\item Construct a divergence-free velocity field
-			\begin{align*}
-				\begin{bmatrix}
-				u\\
-				v
-				\end{bmatrix}
-				=\nabla^\perp\Phi=
-				\begin{bmatrix}
-				\sin(2\pi x)\cos(\pi y)\\
-				-2\cos(2\pi x)\sin(\pi y)
-				\end{bmatrix}
-			\end{align*}
-\pause
-		\item Construct the pressure field according to the \textit{Stokes} equations with $\mu=1$
-			\begin{align*}
-				\bm{F}=
-				\begin{bmatrix}
-				f_x\\
-				f_y
-				\end{bmatrix}
-				=
-				\begin{bmatrix}
-				-\Delta u\\
-				-\Delta v
-				\end{bmatrix}
-				+ \nabla p =
-				\begin{bmatrix}
-				0\\
-				?
-				\end{bmatrix}
-			\end{align*}
-\pause
-			\begin{align*}
-				\Rightarrow p = \frac{5}{2}\pi\cos(2\pi x)\cos(\pi y)
-			\end{align*}
-\pause
-		\item Calculate the force field
-			\begin{align*}
-				\bm{F}=
-				\begin{bmatrix}
-				f_x\\
-				f_y
-				\end{bmatrix}
-				=
-				\begin{bmatrix}
-				0\\
-				-12.5\pi^2\cos(2\pi x)\sin(\pi y)
-				\end{bmatrix}
-			\end{align*}
-\pause			
-		\item Extend the domain to $\Omega=(0,1)^3$ to obtain a pseudo-3D benchmark
-	\end{itemize}
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Preparations}
-\begin{itemize}
-	\item Use  \texttt{CLOCK\_MONOTONIC} from the system environment for runtime measurement
-	\item Implement \enquote{random-noise} initialization 
-	\item Implement an approximated L2 norm to ensure comparability with LBM\\
-		$\Rightarrow$ Verification by taking the norm of the analytical velocity field 
-	\item Calculate the accuracy based on the approximated L2 norm
-		\begin{align*}
-			\frac{\lVert \bm{u}-\bm{u}_{\text{exact}} \rVert}{\lVert \bm{u}_{\text{exact}} \rVert}
-		\end{align*}
-	\item Use the tolerance $10^{-12}$ between two iterations to identify the steady state
-\end{itemize}
-\end{frame}
-
-
-\begin{frame}{LBM - very short overview}
-	%-collide(formula)-explicitness
-	\begin{block} 
-		\centering
-		
-		Collide step: application of the lattice Boltzmann equation
-	\begin{align*}	
-	f_i(\bm{x} + \bm{c_i}\Delta t, t + \Delta t) = f_i(\bm{x}, t) + \Omega_i(\bm{x}, t)
-	\end{align*}
-	\end{block}	
-	\pause
-	Density and velocity are given locally
-	
-		\begin{align*}
-		\rho(\bm{x}, t) = \sum_i f_i(\bm{x},t)
-		\end{align*}
-		\begin{align*}
-		\rho \bm{u}(\bm{x}, t) = \sum_i \bm{c_i} f_i(\bm{x},t)
-		\end{align*}
-		
-		Source: \cite{kruger.2016}
-\end{frame}
-\begin{frame}{Boundary Conditions : Expectations}
-	\begin{block}
-		
-	\begin{itemize}
-		\item Free-slip boundary conditions (Neumann Boundary Conditions)
-		\item No-slip / UBB boundary conditions (Dirichlet boundary conditions)
-	\end{itemize}
-	\pause
-	\centering
-	Both are expected to converge with order 2 in $\Delta x$
-	\end{block}
-\end{frame}
-
-\begin{frame}{Thermal LBM : Principle}
-		\begin{center}
-			\smartdiagram[circular diagram:clockwise]{
-				Velocity Field, Thermal LBM, Force Field, Hydrodyn. LBM}
-			
-		\end{center}
-\end{frame}
   { % Questions?
     \setbeamertemplate{footline}{}
     \begin{frame}[c,noframenumbering]
