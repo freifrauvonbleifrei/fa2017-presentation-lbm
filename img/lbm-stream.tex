@@ -15,12 +15,25 @@
         \node[draw,circle,inner sep=2pt,fill] at (1+2*\x,1+2*\y) {};
       }
     }
+    
+    \pgfmathsetseed{10}
     \coordinate (exm)   at (3,1);
     \foreach \x in {0, 1, -1}{
     	\foreach \y in {0, 1, -1}{
+    		\pgfmathsetmacro{\ra}{0.3*rand+1}%
 		    \draw [thick,-latex,red] (exm)
-			  --( $(exm) + (\x ,\y)$ ) node [] {};
+			  --( $(exm) + (\x*\ra ,\y*\ra)$ ) node [] {};
 	    }
     }
+    
+    \node[red] at ( $(exm) + (0.4,0.15)$) {$f_0$};
+    \node[red] at ( $(exm) + (1.3,0)$) {$f_1$};
+    \node[red] at ( $(exm) + (0,1.3)$) {$f_2$};
+    \node[red] at ( $(exm) + (-1.3,0)$) {$f_3$};
+    \node[red] at ( $(exm) + (0,-1.3)$) {$f_4$};
+    \node[red] at ( $(exm) + (1.3,1.3)$) {$f_5$};
+    \node[red] at ( $(exm) + (-1.3,1.3)$) {$f_6$};
+    \node[red] at ( $(exm) + (-1.3,-1.3)$) {$f_7$};
+    \node[red] at ( $(exm) + (1.3,-1.3)$) {$f_8$};
   \end{tikzpicture}
 }
