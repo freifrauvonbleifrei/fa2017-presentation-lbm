@@ -83,10 +83,9 @@
 \defbibheading{bibliography}{}
 \addbibresource[label=primary]{literature.bib}
 
-\usepackage{csquotes}																% Avoids warning when using BibLaTeX
+\usepackage{csquotes}	
 \usepackage[noabbrev]{cleveref}																% Have automatic formatting of references: use \cref or \Cref{labellist} instead of \ref 
-%\crefname{section}{}{}
-\usepackage{siunitx}														% format SI units
+\usepackage{siunitx}								% format SI units
 \usepackage{smartdiagram}
 
 % Title, authors, and date
@@ -481,8 +480,9 @@
 
     % References
     \section*{References}
-    %TODO List all references or remove slides - I would only mention the references that are actually used for our presentation, my references are already there (Christoph)
+    \nocite{*}
     \begin{frame}[noframenumbering]{References}
+    	\nocite{*}
       \printbibliography
     \end{frame}
   }
