@@ -1,0 +1,28 @@
+\resizebox{\figurewidth}{\figureheight}{
+ \begin{tikzpicture}
+    \clip (-1,-1) rectangle (5cm,5cm); % Clips the picture...
+    
+    \coordinate (up) at (0,1*\cacellsize);
+    \coordinate (left) at (-0.866*\cacellsize,-0.5*\cacellsize);
+    \coordinate (right) at (0.866*\cacellsize,-0.5*\cacellsize);
+    
+   	\foreach \x in {-7,-6,...,7}{
+   		\foreach \y in {-7,-6,...,7}{
+   			\coordinate (here) at (1.732*\x*\cacellsize,1*\y*\cacellsize);
+   			\draw (here) -- ($(here)+(up)$);
+   			\draw (here) -- ($(here)+(left)$);
+   			\draw (here) -- ($(here)+(right)$);
+   			
+   			\coordinate (here) at (1.732*\x*\cacellsize+0.866*\cacellsize,1*\y*\cacellsize+0.5*\cacellsize);
+   			\draw (here) -- ($(here)+(up)$);
+   			\draw (here) -- ($(here)+(left)$);
+   			\draw (here) -- ($(here)+(right)$);
+   		}
+   	}
+   
+	\node[circle,draw,fill,color=blue,inner sep=2pt] (A) at ($(up)+2*(right)+0.1*(right)$) {};
+	\draw[blue,-latex,thick] (A) -> ($(A)+0.5*(right)$);
+	\node[circle,draw,fill,color=blue,inner sep=2pt] (B) at ($(up)-0.1*(right)$) {};
+	\draw[blue,-latex,thick] (B) -> ($(B)-0.5*(right)$);
+  \end{tikzpicture}
+}
