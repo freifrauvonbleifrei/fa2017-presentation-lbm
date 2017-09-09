@@ -81,7 +81,7 @@
 \setbeamercovered{transparent}
 
 \defbibheading{bibliography}{}
-\addbibresource[label=primary]{../literature.bib}
+\addbibresource[label=primary]{literature.bib}
 
 \usepackage{csquotes}																% Avoids warning when using BibLaTeX
 \usepackage[noabbrev]{cleveref}																% Have automatic formatting of references: use \cref or \Cref{labellist} instead of \ref 
@@ -125,13 +125,6 @@
 % - Stream-Collide scheme in graphics (or @Marcial do we get that earlier on?)
 % - show the similarity to Boltzmann equation, introduce important moments, show most important collision operators
 % - Nondimensionalization
-
-
-
-
-
-
-
 
 
 
@@ -385,22 +378,29 @@
 
 			{...is what we get when we apply both steps:}
 			\begin{align*}	
-			f_i(\bm{x} + \bm{c_i}\Delta t, t + \Delta t) = f_i(\bm{x}, t) + \Omega_i(\bm{x}, t)
+				\textcolor{red}{f_i(\bm{x} + \bm{c_i}\Delta t, t + \Delta t)} = \textcolor{blue}{f_i(\bm{x}, t) + \Omega_i(\bm{x}, t)}
 			\end{align*}
-			\pause
+			\newline
+			\only<2-4>{
 			With collision operator $\Omega_i(\bm{x}, t)$, e.g.:
 			\begin{itemize}
 				\item BGK: $\Omega (f)={\frac {1}{\tau}}(f_{i}^{\text{eq}}-f_{i}) = \omega (f_{i}^{\text{eq}}-f_{i}) $
-				\item TRT: %TODO or leave out
+				\item TRT: is often nicer but needs more formulas $\rightarrow$ please look up
 			\end{itemize}
-			\pause 
-			and the equilibrium particle distribution function $f_{i}^{\text{eq}} = $	%TODO
-			\pause 
-			\newline\par\smallskip
-			{Cf. Boltzmann Equation}
-			\begin{align*}%stolen from wikipedia
-				{{\frac {\partial f}{\partial t}}+{\frac {\bm {p} }{m}}\cdot \nabla f=\left({\frac {\partial f}{\partial t}}\right)_{ {coll} }}
-			\end{align*}
+			\par\bigskip
+			\only<3-4>{
+			and the equilibrium particle distribution function $f_{i}^{\text{eq}} = w_{i}\rho \left(1+{\frac {{\vec {e}}_{i}{\vec {u}}}{c_{s}^{2}}}+{\frac {({\vec {e}}_{i}{\vec {u}})^{2}}{2c_{s}^{4}}}-{\frac {{\vec {u}}^{2}}{2c_{s}^{2}}}\right)$
+			\only<4->{	
+			
+				\hfill $w_0 = \frac{4}{9}, w_{1,2,3,4} = \frac{1}{9}, w_{5,6,7,8} = \frac{1}{36}$ for D2Q9 
+			}
+			}
+			}
+			\only<5 | handout:0>{Cf. Boltzmann Equation
+				\begin{align*}%stolen from wikipedia
+					{{\frac {\partial f}{\partial t}}+{\frac {\bm {p} }{m}}\cdot \nabla f=\left({\frac {\partial f}{\partial t}}\right)_{ {coll} }}
+				\end{align*}
+			}
 		%B E
 		%Collision operators
 	\end{frame}
@@ -409,10 +409,10 @@
 		Density and velocity are given locally
 		
 		\begin{align*}
-		\rho(\bm{x}, t) = \sum_i f_i(\bm{x},t)
+			\rho(\bm{x}, t) = \sum_i f_i(\bm{x},t)
 		\end{align*}
 		\begin{align*}
-		\rho \bm{u}(\bm{x}, t) = \sum_i \bm{c_i} f_i(\bm{x},t)
+			\rho \bm{u}(\bm{x}, t) = \sum_i \bm{c_i} f_i(\bm{x},t)
 		\end{align*}
 	\end{frame}
 	
@@ -422,24 +422,52 @@
 		\pause
 		Usual choice:
 		\begin{align*}
-		\Delta x^*  = 1 = C_x \cdot \Delta x\\ 
-		\Delta t^* = 1 = C_t \cdot \Delta t\\ 
-		\Delta \rho^* = 1 = C_\rho \cdot \Delta \rho\\ 
+			\Delta x^*  = 1 = C_x \cdot \Delta x\\ 
+			\Delta t^* = 1 = C_t \cdot \Delta t\\ 
+			\Delta \rho^* = 1 = C_\rho \cdot \Delta \rho\\ 
 		\end{align*}
 		\pause
-		The kinematic velocity in lattice units is directly linked to $\omega$/$\tau$: %TODO
+		The kinematic velocity in lattice units is directly linked to $\omega$ or $\tau$: \pause
+		\begin{align*}
+			\nu^* = (\tau - 0.5 ) c_{s}^{2} = (\frac{1}{\omega} - 0.5 ) c_{s}^{2}, \,\,\,\,
+			\pause
+			c_{s}^{2} = \frac{1}{3}\\
+		\end{align*}
+		\centering
+		$\Rightarrow 0.5 < \tau$  ... and not much larger than 1!
+		\newline\par\smallskip
+	\end{frame}
+	
+	\begin{frame}{LBM -- advantages and disadvantages}
+		\centering
+		\begin{tabular}{c c}
+			\bfseries advantages & \bfseries disadvantages \\\hline
+			\begin{minipage}{0.4\linewidth}
+				\vspace{1ex}
+				\begin{itemize}
+					\pause
+					\item (moderately) easy to implement
+					\pause
+					\item easy to parallelize
+					\pause
+					\item yields Navier-Stokes (by Chapman-Enskog analysis)
+					\pause
+					\item Galilean invariance
+					\pause
+				\end{itemize}
+			\end{minipage}
+			&\begin{minipage}{0.4\linewidth}
+				\vspace{1ex}
+				\begin{itemize}
+					\item needs parameter fine-tuning
+					\pause
+					\item explicit scheme $\rightarrow$  may need fine time resolution for stability, compared to other CFD methods
+				\end{itemize}
+			\end{minipage}
+		\end{tabular}
 	\end{frame}
 	
 \end{section}
-
-
-
-
-
-
-
-
-
 
 
   { % Questions?
